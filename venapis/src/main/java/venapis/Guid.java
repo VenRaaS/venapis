@@ -79,6 +79,7 @@ public class Guid {
 			}
 		}
 
+		//HTTP CORS protocol
 		response.setHeader("Access-Control-Allow-Origin",origin_host);
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
