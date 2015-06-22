@@ -25,6 +25,7 @@ public class Logapi {
 
 	private static final org.apache.log4j.Logger datalog = Logger.getLogger("DataLog");
 	private Gson gson = new Gson();
+	private String hostname = null;
 
 	@RequestMapping("/log")
 	public @ResponseBody String logapi(
@@ -46,7 +47,9 @@ public class Logapi {
 		parameters.put("ven_guid",new String[] { venguid});
 		
 		try {
-			parameters.put("api_loghost", new String[] {InetAddress.getLocalHost().getHostName()});
+			if(hostname == null)
+				hostname = InetAddress.getLocalHost().getHostName();
+			parameters.put("api_loghost", new String[] {hostname});
 		} catch (UnknownHostException e) {
 			// ignore
 		}

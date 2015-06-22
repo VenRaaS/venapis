@@ -28,6 +28,7 @@ public class Guid {
 	private static final Logger log = Logger.getLogger(Guid.class);
 	private static final org.apache.log4j.Logger guidlog = Logger.getLogger("guidLog");
 	private Gson gson = new Gson();
+	private String hostname = null;
 
 	@RequestMapping("/vengu")
 	public @ResponseBody String greeting(
@@ -51,10 +52,13 @@ public class Guid {
 		if (venguid.equals("n")) {
 
 			try {
+				if(hostname == null)
+					hostname = InetAddress.getLocalHost().getHostName();
+				
 				venguid = String.format(
 						"%s-%s-%s",
 						UUID.randomUUID().toString(),
-						UUID.nameUUIDFromBytes(InetAddress.getLocalHost().getHostName().getBytes()).toString(), 
+						UUID.nameUUIDFromBytes(hostname.getBytes()).toString(), 
 						UUID.nameUUIDFromBytes(client_ip.getBytes()).toString());
 
 				Cookie guidCookie = new Cookie("venguid", venguid);
