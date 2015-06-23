@@ -9,7 +9,7 @@
 ## log api:
  * path: http://<domain name>/venapis/log/
  * ipnut:
-   * GET/POST <key> <values[]> Parameters
+   * GET/POST key-values[] Parameters
  * return:
    * Http Response Body Message: ok
 
