@@ -1,6 +1,6 @@
 # venapis
 ## uuid api:
- * path: http://${server.domain.name}/venapis/vengu/id=${website.domain.name}
+ * path: http://${server.domain.name}/venapis/vengu/
  * input: id=${website.domain.name}
  * return: 
    * Http Response Header Set-Cookie: ${uuid} 
