@@ -58,7 +58,7 @@ public class Guid {
 				venguid = String.format(
 						"%s-%s-%s",
 						UUID.randomUUID().toString(),
-						UUID.nameUUIDFromBytes(hostname.getBytes()).toString(), 
+						hostname, 
 						UUID.nameUUIDFromBytes(client_ip.getBytes()).toString());
 
 				Cookie guidCookie = new Cookie("venguid", venguid);
