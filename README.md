@@ -1,5 +1,5 @@
 # venapis
-## guid api:
+## uuid api:
  * path: http://${server.domain.name}/venapis/vengu/id=${website.domain.name}
  * input: id=${website.domain.name}
  * return: 
@@ -8,11 +8,11 @@
  * ex:
    * Javascript
 <pre><code>
-var venguid = document.createElement('iframe');
-venguid.setAttribute("id", "venguid");
-venguid.style.display = "none";
-venguid.src = "http://localhost:8080/venapis/vengu/?id="+top.location.host;
-document.body.appendChild(venguid);	
+var venuuid = document.createElement('iframe');
+venuuid.setAttribute("id", "venguid");
+venuuid.style.display = "none";
+venuuid.src = "http://localhost:8080/venapis/vengu/?id="+top.location.host;
+document.body.appendChild(venuuid);	
 </code></pre>
 
 ## log api:
