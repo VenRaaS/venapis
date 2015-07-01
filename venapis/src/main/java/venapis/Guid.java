@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -25,9 +26,9 @@ import java.util.UUID;
 @Controller
 public class Guid {
 
-	private static final Logger log = Logger.getLogger(Guid.class);
+	//private static final Logger log = Logger.getLogger(Guid.class);
 	private static final org.apache.log4j.Logger guidlog = Logger.getLogger("guidLog");
-	private Gson gson = new Gson();
+	private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 	private String hostname = null;
 
 	@RequestMapping("/vengu")
@@ -56,7 +57,7 @@ public class Guid {
 					hostname = InetAddress.getLocalHost().getHostName();
 				
 				venguid = String.format(
-						"%s-%s-%s",
+						"%s.%s.%s",
 						UUID.randomUUID().toString(),
 						hostname, 
 						UUID.nameUUIDFromBytes(client_ip.getBytes()).toString());

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class Logapi {
 
 	private static final org.apache.log4j.Logger datalog = Logger.getLogger("DataLog");
-	private Gson gson = new Gson();
+	private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 	private String hostname = null;
 
 	@RequestMapping("/log")
