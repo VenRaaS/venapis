@@ -64,7 +64,7 @@ public class Guid {
 
 				Cookie guidCookie = new Cookie("venguid", venguid);
 				guidCookie.setMaxAge(157680000); // 157680000 = 5year
-				guidCookie.setDomain(api_host.replace(":8080", ""));
+				guidCookie.setDomain("venraas.tw");
 				guidCookie.setPath("/");
 				response.addCookie(guidCookie);
 				
