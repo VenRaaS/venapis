@@ -45,7 +45,7 @@ public class Logapi {
 		parameters.put("request_method", new String[] {request.getMethod()});
 		parameters.put("api_logtime",new String[] { ZonedDateTime.now().format(DateTimeFormatter.ISO_ZONED_DATE_TIME)});
 		parameters.put("client_ip",new String[] { client_ip});
-		parameters.put("ven_guid",new String[] { venguid});
+		//parameters.put("ven_guid",new String[] { venguid});
 		
 		try {
 			if(hostname == null)
