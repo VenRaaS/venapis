@@ -65,9 +65,11 @@ public class Guid {
 		if (venguid.equals("n") && typ.equals("g")) {
 				
 			venguid = String.format(
-					"%s.%s",
+					"%s.%s%s",
 					UUID.randomUUID().toString(),
-					hostname);
+					hostname,
+					ZonedDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE).replace("+0800", "")
+					);
 
 			Cookie guidCookie = new Cookie("venguid", venguid);
 			guidCookie.setMaxAge(315360000); // 315360000 = 10year
@@ -104,9 +106,11 @@ public class Guid {
 			break;
 		case "s":
 			rtn= String.format(
-					"%s.%s.se",
+					"%s.%s%s.se",
 					UUID.randomUUID().toString(),
-					hostname);
+					hostname,
+					ZonedDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE).replace("+0800", "")
+					);
 			break;
 		default:
 			break;
