@@ -24,18 +24,18 @@
 		</layout>
 	</appender>
 	
-	<appender name="kafka" class="kafka.producer.KafkaLog4jAppender">
+	<!-- <appender name="kafka" class="kafka.producer.KafkaLog4jAppender">
 		<param name="BrokerList" value="127.0.0.1:9092" />
 		<param name="SyncSend" value="false" />
 		<param name="Topic" value="weblog" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param value="%m%n" name="ConversionPattern" />
 		</layout>
-	</appender>
+	</appender>-->
 	
 	<appender name="dataASYNC" class="org.apache.log4j.AsyncAppender">
 		<appender-ref ref="DataLogAppender" />
-		<appender-ref ref="kafka" />
+		<!--  <appender-ref ref="kafka" /> -->
 	</appender>
 	<appender name="guidASYNC" class="org.apache.log4j.AsyncAppender">
 		<appender-ref ref="venguidLogAppender" />
