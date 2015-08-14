@@ -36,6 +36,7 @@ public class Guid {
 			@RequestParam(value = "id", defaultValue = "n") String id,
 			@RequestParam(value = "pt", defaultValue = "n") String pt,
 			@RequestParam(value = "typ", defaultValue = "n") String typ,
+			@RequestParam(value = "cbk", defaultValue = "n") String cbk,
 			@RequestHeader(value = "user-agent", defaultValue = "n") String agent,
 			@RequestHeader(value = "X-FORWARDED-FOR", defaultValue = "n") String client_ip,
 			@RequestHeader(value = "Origin", defaultValue = "n") String origin_host,
@@ -89,11 +90,6 @@ public class Guid {
 							DateTimeFormatter.ISO_ZONED_DATE_TIME));
 			guidlog.info(gson.toJson(parameters));
 		}
-
-		//HTTP CORS protocol
-		response.setHeader("Access-Control-Allow-Origin",origin_host);
-		response.setHeader("Access-Control-Allow-Credentials", "true");
-		response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
 		
 		/* If type is "g", return guid string;
 		 * If type is "s", return session string;
@@ -115,6 +111,17 @@ public class Guid {
 		default:
 			break;
 		}
+		
+		if(cbk.equals("y") && request.getMethod().equals("GET")){
+			//HTTP(S) jsonp GET protocol
+			rtn = "vengujsonpcallbk('"+typ+"','"+ rtn+"')";
+		} else {
+			//HTTP(S) CORS POST protocol
+			response.setHeader("Access-Control-Allow-Origin",origin_host);
+			response.setHeader("Access-Control-Allow-Credentials", "true");
+			response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+		}
+		
 		return rtn;
 
 	}

@@ -59,7 +59,10 @@ public class Logapi {
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
 		response.setHeader("Content-Type", "text/html;charset=UTF-8");
 
-		return "ok";
+		/**Important : Always return a empty string with this API. For the case of jsonp GET request, a empty string will be return. 
+		 * If not empty string, it could be an error in front-end.
+		 */
+		return "";
 
 	}
 	
