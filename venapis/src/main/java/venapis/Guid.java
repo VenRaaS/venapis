@@ -33,10 +33,10 @@ public class Guid {
 
 	@RequestMapping("/vengu")
 	public @ResponseBody String greeting(
-			@RequestParam(value = "id", defaultValue = "n") String id,
-			@RequestParam(value = "pt", defaultValue = "n") String pt,
-			@RequestParam(value = "typ", defaultValue = "n") String typ,
-			@RequestParam(value = "cbk", defaultValue = "n") String cbk,
+			@RequestParam(value = "id", defaultValue = "n") String id, //domain name identity
+			@RequestParam(value = "pt", defaultValue = "n") String pt, //request protocol type. pt="a" means "https://"
+			@RequestParam(value = "typ", defaultValue = "n") String typ, //request uuid type. typ="g" return ven_guid; type="s" return ven_session 
+			@RequestParam(value = "cbk", defaultValue = "n") String cbk, //"y" or "n". Using javascript call back function or not.
 			@RequestHeader(value = "user-agent", defaultValue = "n") String agent,
 			@RequestHeader(value = "X-FORWARDED-FOR", defaultValue = "n") String client_ip,
 			@RequestHeader(value = "Origin", defaultValue = "n") String origin_host,
@@ -45,7 +45,7 @@ public class Guid {
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		Map<String, String> parameters = new HashMap<String, String>();
-		//If pt is "a", return as https connection.
+		//If pt is "a", note as https connection.
 		if (origin_host.equals("n")) {
 			if (id.equals("n"))
 				return "";
@@ -56,6 +56,7 @@ public class Guid {
 			client_ip = request.getRemoteAddr();
 		
 		try {
+			// get this API server's host name
 			if(hostname == null)
 				hostname = InetAddress.getLocalHost().getHostName();
 			
@@ -64,7 +65,7 @@ public class Guid {
 		}
 		
 		if (venguid.equals("n") && typ.equals("g")) {
-				
+			// The request does not has a guid in client side, gen. guid for it	
 			venguid = String.format(
 					"%s.%s%s",
 					UUID.randomUUID().toString(),
@@ -81,6 +82,7 @@ public class Guid {
 		}
 		
 		if(parameters.size() > 0) {
+			//Log every gen. guid information if it happen
 			parameters.put("agent", agent);
 			parameters.put("client_ip", client_ip);
 			parameters.put("origin", origin_host);
@@ -113,7 +115,7 @@ public class Guid {
 		}
 		
 		if(cbk.equals("y") && request.getMethod().equals("GET")){
-			//HTTP(S) jsonp GET protocol
+			//HTTP(S) jsonp GET protocol, this do for some browser which can't support HTTP(S) CORS POST protocol
 			rtn = "vengujsonpcallbk('"+typ+"','"+ rtn+"')";
 		} else {
 			//HTTP(S) CORS POST protocol
