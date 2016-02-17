@@ -20,7 +20,7 @@ document.body.appendChild(venuuid);
  * ipnut:
    * GET/POST key-values[] Parameters
  * return:
-   * Http Response Body Message: ok
+   * Http Response Body Message: "(空值回傳)"
 
 ## check alive api:
  * path: http://${server.domain.name}/venapis/alive
