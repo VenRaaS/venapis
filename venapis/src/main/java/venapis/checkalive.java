@@ -1,16 +1,21 @@
 package venapis;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
 
-@Controller
+@RestController
 public class checkalive {
 
 	@RequestMapping("/alive")
 	public @ResponseBody String checkservice(){
 		return "ok";
+	}
+		
+	@RequestMapping("/status")
+	public String status() {
+		return "\"Good\"";
 	}
 }
