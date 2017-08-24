@@ -38,6 +38,7 @@ public class Logapi {
 		if (client_ip.equals("n"))
 			client_ip = request.getRemoteAddr();
 
+		//-- content-type:application/x-www-form-urlencoded, must be specified in request header 
 		Map<String, String[]> parameters = new HashMap<String, String[]>(request.getParameterMap());
 		
 		parameters.put("agent",new String[] { agent});
