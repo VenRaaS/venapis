@@ -4,15 +4,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 //import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.venraas.venapis.apollo.raas.CompanyManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -40,6 +45,22 @@ public class Logapi {
 
 		//-- content-type:application/x-www-form-urlencoded, must be specified in request header 
 		Map<String, String[]> parameters = new HashMap<String, String[]>(request.getParameterMap());
+		
+		//-- derive the $code_name according to the given $token 
+		parameters.forEach((k, v) -> {
+			if (1 <= v.length) {
+				String actPayload = v[0];
+				JsonParser jp = new JsonParser();
+				JsonElement je = jp.parse(actPayload);
+				if (je.isJsonObject()) {
+					JsonObject actObj = je.getAsJsonObject();
+		            String token = actObj.get("token").getAsString();
+		            CompanyManager comMgr = new CompanyManager();
+		    		String code_name = comMgr.getCodeName(token);
+		    		parameters.put("code_name",new String[] {code_name});
+	    		}
+			}			
+		});							
 		
 		parameters.put("agent",new String[] { agent});
 		parameters.put("request_method", new String[] {request.getMethod()});
