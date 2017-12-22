@@ -19,7 +19,7 @@
 	</appender>
 	
 	<root level="info">
-		<appender-ref ref="hermesLogFileAppender" />	  
+		<appender-ref ref="venapisLogFileAppender" />	  
 	</root>
 
 </configuration>
