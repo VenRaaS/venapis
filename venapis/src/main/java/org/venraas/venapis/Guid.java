@@ -4,7 +4,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -27,7 +28,9 @@ import java.util.UUID;
 public class Guid {
 
 	//private static final Logger log = Logger.getLogger(Guid.class);
-	private static final org.apache.log4j.Logger guidlog = Logger.getLogger("guidLog");
+	private static final Logger guidlog = LoggerFactory.getLogger("GuidLog");
+	private static final Logger VEN_LOGGER = LoggerFactory.getLogger(VenapisController.class);
+	
 	private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 	private String hostname = null;
 
@@ -61,7 +64,7 @@ public class Guid {
 				hostname = InetAddress.getLocalHost().getHostName();
 			
 		} catch (UnknownHostException e) {
-			guidlog.info(e.toString());
+			VEN_LOGGER.warn(e.toString());
 		}
 		
 		if (venguid.equals("n") && typ.equals("g")) {

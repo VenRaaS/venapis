@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
+		
+	<!-- weblog -->
+	<appender name="dataAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">	
+		<file>${catalina.home}/logs/data</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%msg%n</Pattern>
+		</encoder>
+				                      
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.home}/logs/data.%d{yyyy-MM-dd}.log</fileNamePattern>			
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>		
+	</appender>
+	
+	<!-- ven_guid & ven_session -->
+	<appender name="guidAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">	
+		<file>${catalina.home}/logs/venguid</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%msg%n</Pattern>
+		</encoder>
+				                      
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.home}/logs/venguid.%d{yyyy-MM-dd}.log</fileNamePattern>			
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>		
+	</appender>
+	
+	<!-- application info log -->
 	<appender name="venapisLogFileAppender"	class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${catalina.home}/logs/venapis.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>%d{yyyy-MM-dd HH:mm:ss}|%-5level|%logger - %msg%n</Pattern>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level|%logger - %msg%n</Pattern>			         
 		</encoder>
 		
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
@@ -17,6 +44,16 @@
 			<maxFileSize>100MB</maxFileSize>
 		</triggeringPolicy>
 	</appender>
+	
+	<!-- additivity="false" such that its logging output will be sent to the appender named DataLog, 
+	     but not to any appender attached higher in the hierarchy -->
+	<logger name="DataLog" level="info" additivity="false">
+		<appender-ref ref="dataAppender" />	
+	</logger>
+		
+	<logger name="GuidLog" level="info" additivity="false">
+		<appender-ref ref="guidAppender" />	
+	</logger>
 	
 	<root level="info">
 		<appender-ref ref="venapisLogFileAppender" />	  
