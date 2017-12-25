@@ -18,6 +18,8 @@ public class Constant {
 	
 	public final static long NUM_TIMEUNIT_0 = 0;
 	
+	public final static long NUM_TIMEUNIT_5 = 5;
+	
 	public final static long NUM_TIMEUNIT_10 = 10;
 	
 	public final static long NUM_TIMEUNIT_30 = 30;
