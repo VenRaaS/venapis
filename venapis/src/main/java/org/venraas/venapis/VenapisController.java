@@ -46,6 +46,7 @@ public class VenapisController {
 			//-- derive the $code_name according to the given $token
 			String code_name = null;
 			String token = null;
+			String api_logtime = null;			
 			
 			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 				//-- e.g. {"pageload":["{\"action\":\"pageload\",\"uid\":null,...}"]}
@@ -58,22 +59,33 @@ public class VenapisController {
 					JsonParser jp = new JsonParser();
 					JsonElement je = jp.parse(actPayload);
 					if (je.isJsonObject()) {
-						JsonObject actObj = je.getAsJsonObject();
-			            token = actObj.get("token").getAsString();
-			            CompanyManager comMgr = new CompanyManager();
-			    		code_name = comMgr.getCodeName(token);
-			    		break;
+						JsonObject actObj = je.getAsJsonObject();						
+			            
+			            JsonElement token_je = actObj.get("token");
+			            if (null != token_je) {
+			            	token = token_je.getAsString();
+			            	CompanyManager comMgr = new CompanyManager();
+			            	code_name = comMgr.getCodeName(token);
+			            } 
+			    					  
+			    		JsonElement logdt_je = actObj.get("api_logtime");
+			    		if (null != logdt_je) {
+			    			api_logtime = logdt_je.getAsString();
+			    			api_logtime = Utility.dtFormat(api_logtime);
+			    		}
+			    		
+                        break;
 		    		}
 				}
 			}
 			
 			if (null == code_name)
-				VEN_LOGGER.warn("cann't find the code_name according to the token:%s", token);			
+                VEN_LOGGER.warn("unable to find the [code_name] according to the [token]: %s", token);
 			
 			parameters.put("code_name", new String[] {code_name});			
 			parameters.put("agent",new String[] { agent});
 			parameters.put("request_method", new String[] {request.getMethod()});
-			parameters.put("api_logtime",new String[] { ZonedDateTime.now().format(DateTimeFormatter.ISO_ZONED_DATE_TIME)});
+			parameters.put("api_logtime",new String[] { (null != api_logtime) ? api_logtime : ZonedDateTime.now().format(DateTimeFormatter.ISO_ZONED_DATE_TIME) });
 			parameters.put("client_ip",new String[] { client_ip});			
 						
 			String hostname = InetAddress.getLocalHost().getHostName();

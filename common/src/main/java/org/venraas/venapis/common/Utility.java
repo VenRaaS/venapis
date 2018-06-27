@@ -11,6 +11,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
 
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -69,13 +73,50 @@ public class Utility {
 	
 	static public long duration_sec (Date beg, Date end) {
 		long secs = TimeUnit.MILLISECONDS.toSeconds(end.getTime() - beg.getTime());
-		return secs;		
+		return secs;
 	}
 
 	static public <T> T json2instance(String jsonStr, Class<T> classOfT) throws JsonSyntaxException {
 		Gson g = new Gson();
     	T obj = g.fromJson(jsonStr, classOfT);
-    	return obj;		
+        return obj;
+	}
+	
+	static public String dtFormat(String in_dt) {
+		String rt_dt = null;
+		
+		if (null == in_dt || in_dt.isEmpty())
+			return rt_dt;
+        
+		ZonedDateTime zdt = null;
+        try {
+            long epoch;
+            
+            switch (in_dt.length()) {
+                //-- epoch second, e.g. 1528732666
+                case 10:
+                    epoch = Long.valueOf(in_dt);
+                    epoch *= 1000;
+                    zdt = ZonedDateTime.ofInstant(Instant.ofEpochMilli(epoch), ZoneId.of("UTC"));
+                    break;
+                //-- epoch milliseconds, e.g. 1528732666416
+                case 13:
+                    epoch = Long.valueOf(in_dt);
+                    zdt = ZonedDateTime.ofInstant(Instant.ofEpochMilli(epoch), ZoneId.of("UTC"));
+                    break;
+                //-- ISO_ZONED_DATE_TIME, ISO_INSTANT, e.g. 2018-06-11T11:57:46.416+08:00[Asia/Taipei], 2018-06-26T09:29:27Z
+                default:
+                    zdt = ZonedDateTime.parse(in_dt, DateTimeFormatter.ISO_ZONED_DATE_TIME.withZone(ZoneId.of("UTC")));
+            }
+            
+            rt_dt = zdt.format(DateTimeFormatter.ISO_ZONED_DATE_TIME.withZone(ZoneId.systemDefault()));
+        }
+        catch (Exception e) {
+			VEN_LOGGER.error(e.getMessage());
+			VEN_LOGGER.error(Utility.stackTrace2string(e));
+        }        
+        
+        return  rt_dt;
 	}
 
 
