@@ -1,6 +1,5 @@
 package org.venraas.venapis;
 
-import java.net.InetAddress;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -22,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 @RestController
 public class VenapisController {
@@ -74,22 +74,27 @@ public class VenapisController {
 			    			api_logtime = Utility.dtFormat(api_logtime);
 			    		}
 			    		
-                        break;
+			    		break;
 		    		}
 				}
 			}
 			
 			if (null == code_name)
-                VEN_LOGGER.warn("unable to find the [code_name] according to the [token]: %s", token);
+				VEN_LOGGER.warn("unable to find the [code_name] according to the [token]: %s", token);
 			
 			parameters.put("code_name", new String[] {code_name});			
 			parameters.put("agent",new String[] { agent});
 			parameters.put("request_method", new String[] {request.getMethod()});
 			parameters.put("api_logtime",new String[] { (null != api_logtime) ? api_logtime : ZonedDateTime.now().format(DateTimeFormatter.ISO_ZONED_DATE_TIME) });
-			parameters.put("client_ip",new String[] { client_ip});			
-						
-			String hostname = InetAddress.getLocalHost().getHostName();
+			parameters.put("client_ip",new String[] { client_ip});	
+
+			String hostname = System.getenv("HOSTNAME");
 			parameters.put("api_loghost", new String[] {hostname});			
+		} catch (JsonSyntaxException ex){
+			if (null != parameters) {
+				VEN_LOGGER.error(String.format("%s: %s", ex.getMessage(), new Gson().toJson(parameters)));
+			}
+			VEN_LOGGER.error(Utility.stackTrace2string(ex));				
 		} catch (Exception ex) {
 			VEN_LOGGER.error(ex.getMessage());
 			VEN_LOGGER.error(Utility.stackTrace2string(ex));
