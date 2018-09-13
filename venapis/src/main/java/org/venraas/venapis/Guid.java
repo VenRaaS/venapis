@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.venraas.venapis.common.Utility;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -75,10 +77,22 @@ public class Guid {
 					hostname,
 					ZonedDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE).replace("+0800", "")
 					);
-
+			
+			String secondLevelDomain = "venraas.tw";
+			try {
+				String reqUrl = request.getRequestURL().toString();
+				URL url = new URL(reqUrl);
+				String host = url.getHost();
+				secondLevelDomain = host.substring(host.indexOf('.') + 1);
+				VEN_LOGGER.info(secondLevelDomain);
+			} catch (Exception ex){
+				VEN_LOGGER.error(ex.getMessage());
+				VEN_LOGGER.error(Utility.stackTrace2string(ex));
+			}
+			
 			Cookie guidCookie = new Cookie("venguid", venguid);
 			guidCookie.setMaxAge(315360000); // 315360000 = 10year
-			guidCookie.setDomain("venraas.tw");
+			guidCookie.setDomain(secondLevelDomain);
 			guidCookie.setPath("/");
 			response.addCookie(guidCookie);
 			parameters.put("ven_guid", venguid);
