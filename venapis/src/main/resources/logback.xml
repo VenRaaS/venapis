@@ -10,7 +10,7 @@
 				                      
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${catalina.home}/logs/data.%d{yyyy-MM-dd}.log</fileNamePattern>			
-			<MaxHistory>30</MaxHistory>
+			<MaxHistory>7</MaxHistory>
 		</rollingPolicy>		
 	</appender>
 	
@@ -23,7 +23,7 @@
 				                      
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${catalina.home}/logs/venguid.%d{yyyy-MM-dd}.log</fileNamePattern>			
-			<MaxHistory>30</MaxHistory>
+			<MaxHistory>14</MaxHistory>
 		</rollingPolicy>		
 	</appender>
 	
