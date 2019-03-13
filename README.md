@@ -1,5 +1,5 @@
 # venapis
-## Prerequisite
+## rerequisite
 * Java runtime (JRE/JDK) 1.7+
 * [Tomcat 8.5+](https://tomcat.apache.org/download-80.cgi)
 
