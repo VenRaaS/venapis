@@ -1,6 +1,7 @@
 # venapis
 
-## Developemnt evn.
+## Developemnt environment
+* OS with GUI mode
 * JDK (JRE/JDK) 1.7+
 * [STS - Spring Tool Suite](https://spring.io/tools3/sts/all)
 
