@@ -27,7 +27,8 @@ document.body.appendChild(venuuid);
 
 ### log api:
  * path: http://${server.domain.name}/venapis/log/
- * HEADER TODO....
+ * header:
+   * `content-type:application/x-www-form-urlencoded`
  * ipnut:
    * GET/POST key-values[] Parameters
  * return:
