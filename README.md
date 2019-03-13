@@ -1,9 +1,10 @@
 # venapis
 
 ## Developemnt evn.
-TODO...
+* JDK (JRE/JDK) 1.7+
+* [STS - Spring Tool Suite](https://spring.io/tools3/sts/all)
 
-## prerequisite
+## Prerequisite for running environmnet
 * Java runtime (JRE/JDK) 1.7+
 * [Tomcat 8.5+](https://tomcat.apache.org/download-80.cgi)
 
