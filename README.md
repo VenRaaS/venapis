@@ -8,7 +8,8 @@
 * Java runtime (JRE/JDK) 1.7+
 * [Tomcat 8.5+](https://tomcat.apache.org/download-80.cgi)
 
-## uuid api:
+## APIs Usage
+### uuid api:
  * path: http://${server.domain.name}/venapis/vengu/
  * input: id=${website.domain.name}
  * return: 
@@ -24,7 +25,7 @@ venuuid.src = "http://localhost:8080/venapis/vengu/?id="+top.location.host;
 document.body.appendChild(venuuid);	
 </code></pre>
 
-## log api:
+### log api:
  * path: http://${server.domain.name}/venapis/log/
  * HEADER TODO....
  * ipnut:
