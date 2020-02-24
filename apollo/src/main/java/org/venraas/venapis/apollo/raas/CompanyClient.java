@@ -37,11 +37,13 @@ public class CompanyClient {
         if (null == token || token.isEmpty()) return codeName;        
 
         try {            
-            Config conf = Config.getInstance();
-            String hostname_es_ww = conf.getEs_host_westernwall();
-            if (null == hostname_es_ww) 
-                hostname_es_ww = InetAddress.getLocalHost().getHostName();
+//            Config conf = Config.getInstance();
+//            String hostname_es_ww = conf.getEs_host_westernwall();
+//            if (null == hostname_es_ww) 
+//                hostname_es_ww = InetAddress.getLocalHost().getHostName();
             
+            String hostname_es_ww = "es-node-01.venraas.private";
+
             //-- query $code_name based on given $token
             //   https://www.elastic.co/guide/en/elasticsearch/reference/1.7/search-uri-request.html#search-uri-request
             //   e.g. qUri = "http://${hostPath}/_search?q=${tokenKV}&sort=update_dt:desc";
