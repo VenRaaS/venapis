@@ -65,16 +65,26 @@ public class CompanyClient {
                     .getAsJsonObject()
                     .getAsJsonObject("_source")
                     .getAsJsonArray(Com_pkgs.companies);
-            
-           for (JsonElement v : comps) {
-               JsonObject c = (JsonObject)v;
-               String tok = c.get(Com_pkgs.token).getAsString();
-               
-               if (0 == tok.compareToIgnoreCase(token)) {
-                   codeName = c.get(Com_pkgs.code_name).getAsString();
-                   break;
-               }
-           }
+
+			for (JsonElement v : comps) {
+				JsonObject c = (JsonObject) v;
+
+				JsonElement tok_e = c.get(Com_pkgs.token);
+				String tok = "";
+				if (null != tok_e) {
+					tok = tok_e.getAsString();
+				}
+
+				if (0 == tok.compareToIgnoreCase(token)) {
+
+					JsonElement codeName_e = c.get(Com_pkgs.code_name);
+					if (null != codeName_e) {
+						codeName = codeName_e.getAsString();
+						break;
+					}
+				}
+
+			}
 
         } catch(Exception ex) {
             VEN_LOGGER.error(Utility.stackTrace2string(ex));
