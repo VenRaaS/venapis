@@ -25,10 +25,10 @@ import com.google.gson.JsonSyntaxException;
 
 @RestController
 public class VenapisController {
-	
+
 	private static final Logger DATE_LOGGER = LoggerFactory.getLogger("DataLog");
 	private static final Logger VEN_LOGGER = LoggerFactory.getLogger(VenapisController.class);
-	
+
 	@RequestMapping("/log")
 	String log(
 			@RequestHeader(value = "user-agent", defaultValue = "n") String agent,
@@ -38,16 +38,16 @@ public class VenapisController {
 
 		//-- content-type:application/x-www-form-urlencoded, must be specified in request header 
 		Map<String, String[]> parameters = new HashMap<String, String[]>(request.getParameterMap());
-		
+
 		try {
 			if (client_ip.equals("n"))
 				client_ip = request.getRemoteAddr();				
-	
+
 			//-- derive the $code_name according to the given $token
 			String code_name = null;
 			String token = null;
 			String api_logtime = null;			
-			
+
 			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 				//-- e.g. {"pageload":["{\"action\":\"pageload\",\"uid\":null,...}"]}
 				//   k = "pageload"
@@ -60,28 +60,30 @@ public class VenapisController {
 					JsonElement je = jp.parse(actPayload);
 					if (je.isJsonObject()) {
 						JsonObject actObj = je.getAsJsonObject();						
-			            
+
 			            JsonElement token_je = actObj.get("token");
 			            if (null != token_je) {
 			            	token = token_je.getAsString();
 			            	CompanyManager comMgr = new CompanyManager();
 			            	code_name = comMgr.getCodeName(token);
 			            } 
-			    					  
+		  
 			    		JsonElement logdt_je = actObj.get("api_logtime");
 			    		if (null != logdt_je) {
 			    			api_logtime = logdt_je.getAsString();
 			    			api_logtime = Utility.dtFormat(api_logtime);
 			    		}
-			    		
+
 			    		break;
 		    		}
 				}
 			}
-			
-			if (null == code_name)
+
+			if (null == code_name) {
+				code_name = "";
 				VEN_LOGGER.warn("unable to find the [code_name] according to the [token]: %s", token);
-			
+			}
+
 			parameters.put("code_name", new String[] {code_name});			
 			parameters.put("agent",new String[] { agent});
 			parameters.put("request_method", new String[] {request.getMethod()});
@@ -99,7 +101,7 @@ public class VenapisController {
 			VEN_LOGGER.error(ex.getMessage());
 			VEN_LOGGER.error(Utility.stackTrace2string(ex));
 		}
-		
+
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 		DATE_LOGGER.info(gson.toJson(parameters));
 
