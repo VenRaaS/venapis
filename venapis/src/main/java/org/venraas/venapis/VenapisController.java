@@ -79,8 +79,8 @@ public class VenapisController {
 				}
 			}
 
-			if (null == code_name) {
-				code_name = "";
+			if (null == code_name || code_name.equals("")) {
+				code_name = "n";
 				VEN_LOGGER.warn("unable to find the [code_name] according to the [token]: %s", token);
 			}
 
