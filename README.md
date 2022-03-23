@@ -17,12 +17,12 @@
    * Http Response Header Set-Cookie: ${uuid} 
    * Http Response Body Message: ${uuid}
  * ex:
-   * Get ven_guid by Javascript
+   * Get ven_guid ('typ' is 'g') by Javascript
 <pre><code>
 var venuuid = document.createElement('iframe');
 venuuid.setAttribute("id", "venguid");
 venuuid.style.display = "none";
-venuuid.src = "http://localhost:8080/venapis/vengu/?id="+top.location.host;
+venuuid.src = "http://localhost:8080/venapis/vengu/?typ=g&id="+top.location.host;
 document.body.appendChild(venuuid);	
 </code></pre>
 
