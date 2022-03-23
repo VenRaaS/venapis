@@ -22,7 +22,7 @@
 var venuuid = document.createElement('iframe');
 venuuid.setAttribute("id", "venguid");
 venuuid.style.display = "none";
-venuuid.src = "http://localhost:8080/venapis/vengu/?typ=g&id="+top.location.host;
+venuuid.src = "http://localhost:8080/venapis/vengu?id=www.test-comp.com.tw&typ=g;
 document.body.appendChild(venuuid);	
 </code></pre>
 
