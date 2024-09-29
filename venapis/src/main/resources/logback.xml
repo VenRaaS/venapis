@@ -10,7 +10,7 @@
 				                      
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${catalina.home}/logs/data.%d{yyyy-MM-dd}.log</fileNamePattern>			
-			<MaxHistory>7</MaxHistory>
+			<MaxHistory>3</MaxHistory>
 		</rollingPolicy>		
 	</appender>
 	
